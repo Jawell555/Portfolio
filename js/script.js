@@ -49,3 +49,19 @@ form.addEventListener('submit', async (e) => {
         submitBtn.disabled = false;
     }
 });
+
+const menuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileLinks = mobileMenu.querySelectorAll('.content-selector');
+
+  // Toggle dropdown on button click
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+
+  // Auto-close menu when a link is tapped
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+    });
+  });
