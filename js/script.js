@@ -1,17 +1,59 @@
 const navigators = document.querySelectorAll(".content-selector");
 const sections = document.querySelectorAll(".page-content");
 
-navigators.forEach((navigator) => {
-  navigator.addEventListener("click", () => {
-    const targetId = navigator.getAttribute("data-target");
+// Function to handle switching sections
+function showSection(targetId) {
+  sections.forEach((section) => section.classList.add("hidden"));
+  
+  // Fallback to "home" if target ID is missing or invalid
+  const targetSection = document.getElementById(targetId) || document.getElementById("home");
+  if (targetSection) {
+    targetSection.classList.remove("hidden");
+  }
+}
 
-    sections.forEach((section) => {section.classList.add("hidden");});
-    const targetSection = document.getElementById(targetId);
-    if (targetSection) {
-        targetSection.classList.remove("hidden");
+// Intercept click on navigators
+navigators.forEach((navigator) => {
+  navigator.addEventListener("click", (e) => {
+    // Works whether you use href="#about" or data-target="about"
+    const targetId = (navigator.getAttribute("href")?.replace("#", "") || 
+                      navigator.getAttribute("data-target"));
+
+    if (targetId) {
+      window.location.hash = targetId; // Updates the URL bar
+      showSection(targetId);
     }
   });
 });
+
+// Handle initial page load and Browser Back/Forward navigation
+function handleHashChange() {
+  const currentHash = window.location.hash.replace("#", "") || "home";
+  showSection(currentHash);
+}
+
+window.addEventListener("DOMContentLoaded", handleHashChange);
+window.addEventListener("hashchange", handleHashChange);
+
+// --- Mobile Menu Logic ---
+const menuBtn = document.getElementById("mobile-menu-btn");
+const mobileMenu = document.getElementById("mobile-menu");
+
+if (menuBtn && mobileMenu) {
+  const mobileLinks = mobileMenu.querySelectorAll(".content-selector");
+
+  // Toggle dropdown on button click
+  menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+
+  // Auto-close menu when a link is tapped
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu.classList.add("hidden");
+    });
+  });
+}
 
 const form = document.getElementById('form');
 const submitBtn = form.querySelector('button[type="submit"]');
@@ -49,19 +91,3 @@ form.addEventListener('submit', async (e) => {
         submitBtn.disabled = false;
     }
 });
-
-const menuBtn = document.getElementById('mobile-menu-btn');
-const mobileMenu = document.getElementById('mobile-menu');
-const mobileLinks = mobileMenu.querySelectorAll('.content-selector');
-
-  // Toggle dropdown on button click
-  menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-  });
-
-  // Auto-close menu when a link is tapped
-  mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.add('hidden');
-    });
-  });
