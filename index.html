@@ -14,6 +14,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -35,55 +36,6 @@
             #781057 60%,
             #132e80 90%
           );
-        }
-      }
-    </style>
-    <style>
-      @media print {
-        /* Hide navbar, mobile menu, and interactive buttons */
-        nav,
-        #mobile-menu,
-        .no-print {
-          display: none !important;
-        }
-
-        /* Clean background and reset margins */
-        body {
-          background-color: #ffffff !important;
-          color: #111827 !important;
-          margin: 0 !important;
-          padding: 0 !important;
-        }
-
-        /* Hide inactive sections */
-        .page-content.hidden {
-          display: none !important;
-        }
-
-        /* Format current active section */
-        .page-content:not(.hidden) {
-          display: block !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          width: 100% !important;
-          max-width: 100% !important;
-        }
-
-        .page-content:not(.hidden) > div {
-          box-shadow: none !important;
-          border: none !important;
-          padding: 0 !important;
-        }
-
-        /* Preserve background colors and badges */
-        * {
-          -webkit-print-color-adjust: exact !important;
-          print-color-adjust: exact !important;
-        }
-
-        @page {
-          margin: 1.5cm;
-          size: auto;
         }
       }
     </style>
