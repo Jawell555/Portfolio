@@ -91,3 +91,28 @@ form.addEventListener('submit', async (e) => {
         submitBtn.disabled = false;
     }
 });
+
+// --- Download CV / Print to PDF Logic ---
+// Triggers the browser's print dialog tailored via @media print to save the visible CV as a PDF
+const downloadCvBtn = document.getElementById("download-cv");
+
+if (downloadCvBtn) {
+  downloadCvBtn.addEventListener("click", (e) => {
+    e.preventDefault(); // Stop href from navigating
+
+    const originalTitle = document.title;
+    // Set document title so the browser defaults the saved PDF filename to John_Ruell_San_Lorenzo_CV.pdf
+    document.title = "John_Ruell_San_Lorenzo_CV";
+
+    const restoreTitle = () => {
+      document.title = originalTitle;
+      window.removeEventListener("afterprint", restoreTitle);
+    };
+
+    window.addEventListener("afterprint", restoreTitle);
+    window.print();
+
+    // Fallback in case afterprint does not fire in some environments
+    setTimeout(restoreTitle, 1000);
+  });
+}
